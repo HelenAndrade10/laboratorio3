@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Alunos</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="/js/aluno.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body style="font-family: Roboto Mono, monospace;" >
+<nav class="navbar sticky-top navbar-expand-sm navbar-dark" style="background: #0d1114; display: flex; justify-content: space-between; position: sticky;">
+    <a class="navbar-brand" href="/admin">
+        <img src="/images/btclogo.png" alt="Logo" style="width:40px;">
+        <span style="color: white;">Teach Coins</span>
+    </a>
+    <div align="center">
+        <button type="button" class="btn" style="background: #f2a900; color: black;" id="btnAdicionarProduto" data-bs-toggle="modal" data-bs-target="#modalNovoAluno" >Criar aluno</button>
+    </div>
+    <a class="navbar-brand" href="#">
+        <span style="color: white;">Administrador</span>
+        <img src="/images/userlogo.jpeg" alt="Logo" style="width:40px;">
+    </a>
+</nav>
+
+<div align="center" class="container container-fluid my-4">
+    <h1 th:if="${listaAlunos.isEmpty()}" style="color: black;" align="center" class="text-center" colspan="3">Nenhum aluno foi cadastrado!</h1>
+<!--    <p align="center">-->
+<!--        <img th:if="${estoque.isEmpty()}"  align="center" width="auto" src="/images/worker.png">-->
+<!--    </p>-->
+
+    <table th:if="${!(listaAlunos.isEmpty())}" class="table-hover datatable table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Instituição</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="aluno : ${listaAlunos}">
+            <td th:text="${aluno.id}"></td>
+            <td th:text="${aluno.nome}"></td>
+            <td th:text="${aluno.email}"></td>
+            <td th:text="${aluno.instituicao.nome}"></td>
+            <td >
+                <a th:href="@{/aluno/excluir/{id}(id=${aluno.id})}" class="btn" style="background: #f2a900; color: black;margin-right: 1%">Excluir</a>
+                <button th:value="${aluno.id}" type="button" class="btn btnAlterarAluno" style="background: #f2a900; color: black;" data-bs-toggle="modal" data-bs-target="#modalAlterarAluno">Alterar</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="modalNovoAluno" tabindex="-1" aria-labelledby="novoAlunoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="novoAlunoModalLabel">Novo Parceiro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formNovoAluno" action="#" th:action="@{/aluno/salvar}" th:object="${aluno}" method="POST" class="register-form">
+                    <input type="hidden" id="id" th:field="*{id}" />
+                    <div class="mb-3">
+                        <label for="AlunoNome">Nome:</label>
+                        <input type="text"  class="form-control" id="AlunoNome" th:field="*{nome}" minlength="1" maxlength="50" required placeholder="Nome"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="AlunoEmail">E-mail:</label>
+                        <input type="text" class="form-control"th:field="*{email}" id="AlunoEmail" minlength="14" maxlength="40" required placeholder="Email"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="AlunoCpf">CPF:</label>
+                        <input type="text" class="form-control"th:field="*{cpf}" id="AlunoCpf" minlength="11" maxlength="11" required placeholder="CPF"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="AlunoEndereco">Endereço:</label>
+                        <input type="text" class="form-control"th:field="*{endereco}" id="AlunoEndereco" minlength="5" maxlength="100" required placeholder="Endereço"/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Instituição:</label>
+                        <select class="form-select" id="inputGroupSelect01" th:field="*{instituicao}">
+                            <tr th:each="instituicao: ${listaInstituicoes}">
+                                <option th:value="${instituicao.id}" th:text="${instituicao.nome}"></option>
+                            </tr>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnModalCriar" class="btn" style="background: #f2a900;color: black;">Criar parceiro</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalAlterarAluno" tabindex="-1" aria-labelledby="alterarAlunoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AlterarAlunoModalLabel">Novo Parceiro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAlterarAluno" action="#" th:action="@{/parceiro/salvar}" th:object="${aluno}" method="POST" class="register-form">
+                    <input type="hidden" id="alterar_id" th:field="*{id}" />
+                    <div class="mb-3">
+                        <label for="AlterarAlunoNome">Nome:</label>
+                        <input type="text"  class="form-control" id="AlterarAlunoNome" th:field="*{nome}" minlength="1" maxlength="50" required placeholder="Nome"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="AlterarAlunoEmail">E-mail:</label>
+                        <input type="text" class="form-control"th:field="*{email}" id="AlterarAlunoEmail" minlength="14" maxlength="14" required placeholder="E-mail"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="AlterarAlunoCPF">CPF:</label>
+                        <input type="text" class="form-control"th:field="*{cpf}" id="AlterarAlunoCPF" minlength="14" maxlength="14" required placeholder="CPF"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="AlterarAlunoEndereco">Endereço:</label>
+                        <input type="text" class="form-control"th:field="*{endereco}" id="AlterarAlunoEndereco" minlength="14" maxlength="14" required placeholder="Endereço"/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Instituição:</label>
+                        <select class="form-select" id="inputGroupSelect02" th:field="*{instituicao}">
+                            <tr th:each="instituicao: ${listaInstituicoes}">
+                                <option th:value="${instituicao.id}" th:text="${instituicao.nome}"></option>
+                            </tr>
+                        </select>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnModalAlterar" class="btn" style="background: #f2a900;color: black;">Alterar aluno</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar fixed-bottom navbar-expand-sm navbar-dark" style="background: #0d1114;text-align: center">
+    <div align="center" style="text-align: center;margin: 0 auto">
+        <a style="text-align: center; align: center" class="navbar-brand" href="#">Copyright &copy; 2022 - All Rights Reserved - Teach Coins</a>
+    </div>
+</nav>
+</body>
+</html>
