@@ -10,7 +10,7 @@
 </head>
 <body style="font-family: Roboto Mono, monospace;" >
 <nav class="navbar sticky-top navbar-expand-sm navbar-dark" style="background: #0d1114; display: flex; justify-content: space-between; position: sticky;">
-    <a class="navbar-brand" href="/admin">
+    <a class="navbar-brand" href="#" onclick="javascript:window.history.back(-1);return false;">
         <img src="/images/btclogo.png" alt="Logo" style="width:40px;">
         <span style="color: white;">Teach Coins</span>
     </a>
@@ -58,7 +58,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="novoAlunoModalLabel">Novo Parceiro</h5>
+                <h5 class="modal-title" id="novoAlunoModalLabel">Novo Aluno</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -90,7 +90,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="btnModalCriar" class="btn" style="background: #f2a900;color: black;">Criar parceiro</button>
+                        <button type="submit" id="btnModalCriar" class="btn" style="background: #f2a900;color: black;">Criar aluno</button>
                     </div>
                 </form>
             </div>
@@ -101,7 +101,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="AlterarAlunoModalLabel">Novo Parceiro</h5>
+                <h5 class="modal-title" id="AlterarAlunoModalLabel">Novo Aluno</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -124,12 +124,13 @@
                         <input type="text" class="form-control"th:field="*{endereco}" id="AlterarAlunoEndereco" minlength="14" maxlength="14" required placeholder="Endereço"/>
                     </div>
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Instituição:</label>
+                        <label class="input-group-text" for="inputGroupSelect02">Instituição:</label>
                         <select class="form-select" id="inputGroupSelect02" th:field="*{instituicao}">
                             <tr th:each="instituicao: ${listaInstituicoes}">
                                 <option th:value="${instituicao.id}" th:text="${instituicao.nome}"></option>
                             </tr>
                         </select>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" id="btnModalAlterar" class="btn" style="background: #f2a900;color: black;">Alterar aluno</button>

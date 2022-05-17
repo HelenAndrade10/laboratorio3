@@ -12,6 +12,23 @@ body{
   min-height: 85vh;
   font-family: "Roboto Mono", monospace;
 }
+#content-div2 {
+  margin: 0;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+  font-family: "Roboto Mono", monospace;
+}
+#content-div5 {
+  margin: 0;
+  display: grid;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+  font-family: "Roboto Mono", monospace;
+}
 
 button {
   margin: 50px;

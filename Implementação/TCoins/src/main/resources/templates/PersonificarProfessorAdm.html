@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Personificar aluno</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="/js/personificar.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body style="font-family: Roboto Mono, monospace;" >
+<nav class="navbar sticky-top navbar-expand-sm navbar-dark" style="background: #0d1114; display: flex; justify-content: space-between; position: sticky;">
+    <a class="navbar-brand" href="#" onclick="javascript:window.history.back(-1);return false;">
+        <img src="/images/btclogo.png" alt="Logo" style="width:40px;">
+        <span style="color: white;">Teach Coins</span>
+    </a>
+    <ul class="nav nav-pills">
+        <li class="nav-item" style="padding-right: 4px;padding-top: 4px;">
+            <a href="/admin/personificar/alunos">
+                <button type="button" class="btn" style="background: #f2a900; color: black;" id="btnTrocarParaPersonifacaoProf">Personificar aluno</button>
+            </a>
+        </li>
+        <li class="nav-item" style="padding: 4px; width: auto;">
+            <form id="formPesquisar" class="d-flex">
+                <input id="inputPesquisar" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
+                <button id="btnPesquisar" class="btn" style="background: #f2a900;color: black;"  type="submit">Pesquisar</button>
+            </form>
+        </li>
+    </ul>
+    <a class="navbar-brand" href="#">
+        <span style="color: white;">Administrador</span>
+        <img src="/images/userlogo.jpeg" alt="Logo" style="width:40px;">
+    </a>
+</nav>
+
+<div align="center" class="container container-fluid my-4">
+    <h1 th:if="${listaProfessores.isEmpty()}" style="color: black;" align="center" class="text-center" colspan="3">Nenhum professor foi encontrado!</h1>
+    <!--    <p align="center">-->
+    <!--        <img th:if="${estoque.isEmpty()}"  align="center" width="auto" src="/images/worker.png">-->
+    <!--    </p>-->
+
+    <table th:if="${!(listaProfessores.isEmpty())}" class="table-hover datatable table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Departamento</th>
+            <th>Instituição</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="professor : ${listaProfessores}">
+            <td th:text="${professor.id}"></td>
+            <td th:text="${professor.nome}"></td>
+            <td th:text="${professor.departamento.nome}"></td>
+            <td th:text="${professor.instituicao.nome}"></td>
+            <td >
+                <a th:href="@{/professor/personificar/{id}(id=${professor.id})}">
+                    <button th:value="${professor.id}" type="button" class="btn btnPersonificarProfessor" style="background: #f2a900; color: black;">Personificar</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<nav class="navbar fixed-bottom navbar-expand-sm navbar-dark" style="background: #0d1114;text-align: center">
+    <div align="center" style="text-align: center;margin: 0 auto">
+        <a style="text-align: center; align: center" class="navbar-brand" href="#">Copyright &copy; 2022 - All Rights Reserved - Teach Coins</a>
+    </div>
+</nav>
+</body>
+</html>

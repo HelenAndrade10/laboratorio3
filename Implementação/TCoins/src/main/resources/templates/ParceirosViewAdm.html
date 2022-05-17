@@ -10,11 +10,12 @@
 </head>
 <body style="font-family: Roboto Mono, monospace;">
 <nav class="navbar sticky-top navbar-expand-sm navbar-dark" style="background: #0d1114; display: flex; justify-content: space-between; position: sticky;">
-    <a class="navbar-brand" href="/estoque">
+    <a class="navbar-brand" href="#" onclick="javascript:window.history.back(-1);return false;">
         <img src="/images/btclogo.png" alt="Logo" style="width:40px;">
         <span style="color: white;">Teach Coins</span>
     </a>
     <div align="center">
+
         <button type="button" class="btn" style="background: #f2a900; color: black;" id="btnAdicionarParceiro" data-bs-toggle="modal" data-bs-target="#modalNovoParceiro" >Criar parceiro</button>
     </div>
     <a class="navbar-brand" href="#">
@@ -25,10 +26,6 @@
 
 <div align="center" class="container container-fluid my-4">
     <h1 th:if="${listaParceiros.isEmpty()}" style="color: black;" align="center" class="text-center" colspan="3">Nenhum parceiro foi cadastrado!</h1>
-    <!--    <p align="center">-->
-    <!--        <img th:if="${estoque.isEmpty()}"  align="center" width="auto" src="/images/worker.png">-->
-    <!--    </p>-->
-
     <table th:if="${!(listaParceiros.isEmpty())}" class="table-hover datatable table">
         <thead>
         <tr>

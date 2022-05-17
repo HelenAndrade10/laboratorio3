@@ -6,33 +6,31 @@ function httpReq(theUrl){
 }
 window.onload = function() {
 
-    var btnAlterar = document.querySelectorAll(".btnAlterarAluno")
-    for (let i = 0; i < btnAlterar.length; i++) {
-            btnAlterar[i].addEventListener("click", function(event){
-                var codeAluno = btnAlterar[i].getAttribute("value")
+    var btnAlterarProf = document.querySelectorAll(".btnAlterarProf")
+    for (let i = 0; i < btnAlterarProf.length; i++) {
+            btnAlterarProf[i].addEventListener("click", function(event){
+                var codeProf = btnAlterarProf[i].getAttribute("value")
 
-                var campoNome = document.querySelector("#AlterarAlunoNome")
-                var campoCPF = document.querySelector("#AlterarAlunoCPF")
-                var campoEmail = document.querySelector("#AlterarAlunoEmail")
-                var campoEndereco = document.querySelector("#AlterarAlunoEndereco")
-                var campoInstituicao = document.querySelector("#inputGroupSelect02")
+                var campoNome = document.querySelector("#AlterarProfNome")
+                var campoCPF = document.querySelector("#AlterarProfCpf")
+                var campoDepartamento = document.querySelector("#AlterarProfDpt")
+                var campoInstituicao = document.querySelector("#AlterarProfInstituicao")
 
-                var formModalAluno = document.getElementById("formAlterarAluno")
+                var formModalProf = document.getElementById("formAlterarProf")
 
-                var btnHref = "/aluno/atualizar/" + codeAluno
+                var btnHref = "/professor/atualizar/" + codeProf
 
-                formModalAluno.setAttribute("action", btnHref)
+                formModalProf.setAttribute("action", btnHref)
 
                 var origin = window.location.origin
 
-                var searchURL = origin + "/alunos/buscar/" + codeAluno
+                var searchURL = origin + "/professores/buscar/" + codeProf
 
                 var produtoObj = httpReq(searchURL)
 
                 campoNome.setAttribute("value", produtoObj.nome)
                 campoCPF.setAttribute("value", produtoObj.cpf)
-                campoEmail.setAttribute("value", produtoObj.email)
-                campoEndereco.setAttribute("value", produtoObj.endereco)
+                campoDepartamento.setAttribute("value", produtoObj.departamento)
                 campoInstituicao.setAttribute("value", produtoObj.Instituicao.nome)
 
             })
