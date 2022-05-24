@@ -1,24 +1,27 @@
 package br.com.TeachCoins.TCoins.Controller;
 
+import br.com.TeachCoins.TCoins.Modal.Aluno;
 import br.com.TeachCoins.TCoins.Modal.Parceiro;
+import br.com.TeachCoins.TCoins.Modal.Vantagem;
 import br.com.TeachCoins.TCoins.Repository.AlunoRepository;
 import br.com.TeachCoins.TCoins.Repository.ParceiroRepository;
+import br.com.TeachCoins.TCoins.Repository.VantagemRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ParceiroController {
 
     private ParceiroRepository parceiroRepo;
 
-    public ParceiroController(ParceiroRepository parceiroRepo){
+    private VantagemRepository vantagemRepo;
+
+    public ParceiroController(ParceiroRepository parceiroRepo, VantagemRepository vantagemRepo) {
         this.parceiroRepo = parceiroRepo;
+        this.vantagemRepo = vantagemRepo;
     }
 
     @GetMapping("/parceiros")
@@ -64,5 +67,33 @@ public class ParceiroController {
         rtn.put("cnpj", parceiro.getCnpj());
 
         return rtn;
+    }
+
+    @GetMapping("/parceiro/personificar/{id}")
+    public String personificarParceiro(@PathVariable("id") long id, Model model){
+        Parceiro personificado = parceiroRepo.getById(id);
+        model.addAttribute("parceiro", personificado);
+        return "IParceiro";
+    }
+
+    @GetMapping("/parceiro/ofertas/{id}")
+    public String verOfertas(Model model, @PathVariable("id") Long id){
+
+        List<Vantagem> vantagens = new ArrayList<>();
+
+        for (Vantagem vntg: vantagemRepo.findAll()) {
+            if(vntg.getFornecedor().getId().equals(id)){
+                vantagens.add(vntg);
+            }
+        }
+        model.addAttribute("parceiro", parceiroRepo.getById(id));
+        model.addAttribute("vantagens", vantagens);
+        return "IOfertas";
+    }
+
+    @GetMapping("/parceiro/criar-oferta/{id}")
+    public String criarOferta(@PathVariable("id")Long id, Model model, @ModelAttribute("vantagem")Vantagem vantagem){
+        model.addAttribute("parceiro", parceiroRepo.getById(id));
+        return "CadastroVantagens";
     }
 }

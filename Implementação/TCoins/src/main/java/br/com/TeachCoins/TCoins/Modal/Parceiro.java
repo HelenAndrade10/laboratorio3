@@ -1,9 +1,7 @@
 package br.com.TeachCoins.TCoins.Modal;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,7 +13,13 @@ public class Parceiro {
 
     private String nome;
 
+    private int quantidade_ofertas = 0;
+
     private String cnpj;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vantagem_id")
+    private List<Vantagem> ofertas;
 
     @Deprecated
     public Parceiro() {}
@@ -23,6 +27,18 @@ public class Parceiro {
     public Parceiro(String nome, String cnpj) {
         this.nome = nome;
         this.cnpj = cnpj;
+    }
+
+    public List<Vantagem> getOfertas() {
+        return ofertas;
+    }
+
+    public void adicionarOferta(Vantagem oferta){
+        this.ofertas.add(oferta);
+    }
+
+    public void setOfertas(List<Vantagem> ofertas) {
+        this.ofertas = ofertas;
     }
 
     public Long getId() {
@@ -49,6 +65,14 @@ public class Parceiro {
         this.cnpj = cnpj;
     }
 
+    public int getQuantidade_ofertas() {
+        return quantidade_ofertas;
+    }
+
+    public void setQuantidade_ofertas(int quantidade_ofertas) {
+        this.quantidade_ofertas = quantidade_ofertas;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,4 +85,6 @@ public class Parceiro {
     public int hashCode() {
         return Objects.hash(id, nome, cnpj);
     }
+
+
 }

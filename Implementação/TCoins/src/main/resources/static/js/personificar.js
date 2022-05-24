@@ -8,10 +8,12 @@ window.onload = function() {
         let result = text.includes("world");
 
         if(url_atual.includes("/admin/personificar/alunos")){
-               var path = "/admin/personificar/alunos/pesquisar/"
-            }else{
+              var path = "/admin/personificar/alunos/pesquisar/"
+        }else if(url_atual.includes("/admin/personificar/professores")){
               var path = "/admin/personificar/professores/pesquisar/"
-            }
+        }else{
+              var path = "/admin/personificar/parceiros/pesquisar/"
+        }
 
         formPesquisar.setAttribute("action", path + returnHome)
 

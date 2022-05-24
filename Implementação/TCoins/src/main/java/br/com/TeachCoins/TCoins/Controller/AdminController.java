@@ -1,6 +1,7 @@
 package br.com.TeachCoins.TCoins.Controller;
 
 import br.com.TeachCoins.TCoins.Modal.Aluno;
+import br.com.TeachCoins.TCoins.Modal.Parceiro;
 import br.com.TeachCoins.TCoins.Modal.Professor;
 import br.com.TeachCoins.TCoins.Repository.*;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ public class AdminController {
     private CarteiraRepository carteiraRepo;
     private List<Aluno> actualList;
     private List<Professor> actualListProf;
+    private List<Parceiro> actualListParceiro;
 
     public AdminController(AlunoRepository alunoRepo, InstituicaoRepository instituicaoRepo, ProfessorRepository professorRepo,
                            ParceiroRepository parceiroRepo, ExtratoRepository extratoRepo, CarteiraRepository carteiraRepo){
@@ -47,6 +49,13 @@ public class AdminController {
         model.addAttribute("listaAlunos", alunoRepo.findAll());
         actualList = alunoRepo.findAll();
         return "/PersonificarAlunosAdm";
+    }
+
+    @GetMapping("/admin/personificar/parceiros")
+    public String personificarParceiros(Model model, @ModelAttribute("parceiro") Parceiro parceiro){
+        model.addAttribute("listaParceiros", parceiroRepo.findAll());
+        actualListParceiro = parceiroRepo.findAll();
+        return "/PersonificarParceirosAdm";
     }
 
     @GetMapping("/admin/personificar/professores")
@@ -136,6 +145,49 @@ public class AdminController {
                 model.addAttribute("listaProfessores", tempNome);
                 actualListProf = tempNome;
                 url = "PersonificarProfessorAdm";
+            }else{
+                actualListProf = professorRepo.findAll();
+            }
+
+        }
+        return url;
+    }
+
+    @GetMapping("/admin/personificar/parceiros/pesquisar/{string}")
+    public String pesquisarParceiro(Model model, @PathVariable("string")String string, @ModelAttribute("parceiro")Parceiro parceiro){
+        String url = "redirect:/admin/personificar/parceiros";
+        if(!(string.equals("returnBackHome"))) {
+            List<Parceiro> tempNome = new ArrayList<Parceiro>();
+
+            string = string.toLowerCase();
+
+            int M = string.length();
+            int N = 0;
+
+            for (Parceiro prc : parceiroRepo.findAll()) {
+//                aln.setNome((aln.getNome()).toLowerCase());
+                N = (prc.getNome()).length();
+
+                /* A loop to slide pat one by one */
+                for (int i = 0; i <= N - M; i++) {
+
+                    int j;
+
+                    /* For current index i, check for pattern
+                      match */
+                    for (j = 0; j < M; j++)
+                        if (((prc.getNome().toLowerCase()).charAt(i + j) != string.charAt(j)))
+                            break;
+
+                    if (j == M) // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
+                        tempNome.add(prc);
+                }
+            }
+
+            if (string.length() > 0) {
+                model.addAttribute("listaParceiros", tempNome);
+                actualListParceiro = tempNome;
+                url = "PersonificarParceirosAdm";
             }else{
                 actualListProf = professorRepo.findAll();
             }

@@ -5,6 +5,7 @@ import java.util.List;
 
 @Entity
 public class Extrato {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

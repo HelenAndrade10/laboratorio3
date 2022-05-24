@@ -46,19 +46,19 @@ public class PopulacaoInicialInstituicao implements CommandLineRunner {
 
 
 
-        departamentoRepo.save(dpt1);
-        departamentoRepo.save(dpt2);
-        departamentoRepo.save(dpt3);
-        departamentoRepo.save(dpt4);
-        departamentoRepo.save(dpt5);
-        departamentoRepo.save(dpt6);
-        departamentoRepo.save(dpt7);
-        departamentoRepo.save(dpt8);
-        departamentoRepo.save(dpt9);
-        departamentoRepo.save(dpt10);
-        departamentoRepo.save(dpt11);
-        departamentoRepo.save(dpt12);
-        departamentoRepo.save(dpt13);
+//        departamentoRepo.save(dpt1);
+//        departamentoRepo.save(dpt2);
+//        departamentoRepo.save(dpt3);
+//        departamentoRepo.save(dpt4);
+//        departamentoRepo.save(dpt5);
+//        departamentoRepo.save(dpt6);
+//        departamentoRepo.save(dpt7);
+//        departamentoRepo.save(dpt8);
+//        departamentoRepo.save(dpt9);
+//        departamentoRepo.save(dpt10);
+//        departamentoRepo.save(dpt11);
+//        departamentoRepo.save(dpt12);
+//        departamentoRepo.save(dpt13);
 
 
         Instituicao inst1 = new Instituicao("PUC-MG");
