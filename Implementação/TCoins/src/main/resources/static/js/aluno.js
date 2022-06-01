@@ -6,6 +6,10 @@ function httpReq(theUrl){
 }
 window.onload = function() {
 
+    if(window.location.search == '?error=produto%20ja%20existe'){
+             alert('Saldo insuficiente. Transação cancelada')
+         }
+
     var btnAlterar = document.querySelectorAll(".btnAlterarAluno")
     for (let i = 0; i < btnAlterar.length; i++) {
             btnAlterar[i].addEventListener("click", function(event){

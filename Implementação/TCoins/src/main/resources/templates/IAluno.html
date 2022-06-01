@@ -40,10 +40,13 @@
                 <button class="fill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Minha carteira</button>
             </a>
             <a th:href="@{/extrato/{id}(id=${aluno.id})}">
-                <button class="fill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Meu extrato</button>
+                <button class="fill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Minhas transações</button>
             </a>
             <a th:href="@{/vantagem/{id_aluno}(id_aluno=${aluno.id})}">
-                <button class="fill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Ver Vantagens</button>
+                <button class="fill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Catálogo Vantagens</button>
+            </a>
+            <a th:href="@{/minhas/vantagem/{id_aluno}(id_aluno=${aluno.id})}">
+                <button class="fill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Minhas Vantagens</button>
             </a>
         </div>
     </div>

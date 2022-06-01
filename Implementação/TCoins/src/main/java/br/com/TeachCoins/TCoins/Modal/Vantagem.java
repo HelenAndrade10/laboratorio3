@@ -46,6 +46,8 @@ public class Vantagem {
         this.path = path;
     }
 
+
+
     public void setPhotos(String photos) {
         this.photos = photos;
     }

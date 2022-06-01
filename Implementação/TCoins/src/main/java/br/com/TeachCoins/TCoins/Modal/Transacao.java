@@ -11,6 +11,8 @@ public class Transacao {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private long vantagem_id;
+
     private long remetente_id;
 
     private long destinatario_id;
@@ -29,13 +31,43 @@ public class Transacao {
     @Deprecated
         public Transacao(){}
 
-    public Transacao(long rementente, long destinatario, int valor, String nomeDest,String nomeRem, Extrato extrato) {
+    public Transacao(long rementente, long destinatario,int valor, String nomeDest,String nomeRem, Extrato extrato) {
         this.remetente_id = rementente;
         this.destinatario_id = destinatario;
         this.valor = valor;
         this.destinatario_nome = nomeDest;
         this.rementente_nome = nomeRem;
         this.extrato = extrato;
+
+        LocalDateTime agora = LocalDateTime.now();
+
+        // formatar a data
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        String dataFormatada = formatterData.format(agora);
+
+        // formatar a hora
+        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String horaFormatada = formatterHora.format(agora);
+
+        this.horaFormatada = ( dataFormatada + " - " + horaFormatada);
+    }
+
+    public long getVantagem_id() {
+        return vantagem_id;
+    }
+
+    public void setVantagem_id(long vantagem_id) {
+        this.vantagem_id = vantagem_id;
+    }
+
+    public Transacao(long rementente, long vantagem_id, long destinatario, int valor, String nomeDest, String nomeRem, Extrato extrato) {
+        this.remetente_id = rementente;
+        this.destinatario_id = destinatario;
+        this.valor = valor;
+        this.destinatario_nome = nomeDest;
+        this.rementente_nome = nomeRem;
+        this.extrato = extrato;
+        this.vantagem_id = vantagem_id;
 
         LocalDateTime agora = LocalDateTime.now();
 

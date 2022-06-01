@@ -2,11 +2,9 @@ package br.com.TeachCoins.TCoins.Controller;
 
 import br.com.TeachCoins.TCoins.Modal.Aluno;
 import br.com.TeachCoins.TCoins.Modal.Carteira;
+import br.com.TeachCoins.TCoins.Modal.Transacao;
 import br.com.TeachCoins.TCoins.Modal.Vantagem;
-import br.com.TeachCoins.TCoins.Repository.AlunoRepository;
-import br.com.TeachCoins.TCoins.Repository.CarteiraRepository;
-import br.com.TeachCoins.TCoins.Repository.ParceiroRepository;
-import br.com.TeachCoins.TCoins.Repository.VantagemRepository;
+import br.com.TeachCoins.TCoins.Repository.*;
 import br.com.TeachCoins.TCoins.TCoinsApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class VantagemController {
 
     private VantagemRepository vantagemRepo;
+
+    private TransacaoRepository transacaoRepo;
 
     private ParceiroRepository parceiroRepo;
 
@@ -31,11 +33,31 @@ public class VantagemController {
 
     private CarteiraRepository carteiraRepo;
 
-    public VantagemController(VantagemRepository vantagemRepo, ParceiroRepository parceiroRepo, AlunoRepository alunoRepo, CarteiraRepository carteiraRepo) {
+    public VantagemController(VantagemRepository vantagemRepo, TransacaoRepository transacaoRepo, ParceiroRepository parceiroRepo, AlunoRepository alunoRepo, CarteiraRepository carteiraRepo) {
         this.vantagemRepo = vantagemRepo;
+        this.transacaoRepo = transacaoRepo;
         this.parceiroRepo = parceiroRepo;
         this.alunoRepo = alunoRepo;
         this.carteiraRepo = carteiraRepo;
+    }
+
+    @GetMapping("minhas/vantagem/{id_aluno}")
+    public String minhasVantagens(@PathVariable("id_aluno") long id_aluno, Model model){
+        List<Vantagem> myVantagens = new ArrayList<>();
+
+        Aluno alunoPersonificado = alunoRepo.getById(id_aluno);
+        Carteira carteiraAluno = new Carteira();
+        for (Transacao trnsc : transacaoRepo.findAll()) {
+//            long id = trnsc.getVantagem_id();
+            if((trnsc.getRemetente_id() == id_aluno) && (trnsc.getVantagem_id() > 0)){
+                myVantagens.add(vantagemRepo.getById(trnsc.getVantagem_id()));
+            }
+        }
+        model.addAttribute("carteira", carteiraAluno);
+        model.addAttribute("aluno", alunoPersonificado);
+        model.addAttribute("ofertas", myVantagens);
+
+        return "IVantagensAdquiridas";
     }
 
     @GetMapping("/vantagem/{id_aluno}")
